@@ -8,7 +8,7 @@ def get_image_descriptor(image_path, hog):
     if image is None or image.shape == (0, 0):
         raise ValueError(f'Invalid image: {image_path}')
     image_gaussian = cv.GaussianBlur(image, (3, 3), 0)
-    image_resized = cv.resize(image_gaussian, (256, 256), interpolation=cv.INTER_AREA)
+    image_resized = cv.resize(image_gaussian, (128, 128), interpolation=cv.INTER_AREA)
     return hog.compute(image_resized).T
 
 
@@ -38,7 +38,7 @@ def save_data(base_dir, data, labels):
 if __name__ == '__main__':
     base_dir = os.getcwd()
     classes = os.listdir(os.path.join(base_dir, 'database'))
-    hog = cv.HOGDescriptor((256, 256), (16, 16), (8, 8), (8, 8), 9)
+    hog = cv.HOGDescriptor((128, 128), (32, 32), (16, 16), (16, 16), 9)
     descriptors, labels = get_image_descriptors(base_dir, classes, hog)
     save_data(base_dir, descriptors, labels)
 
